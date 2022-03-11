@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
     [SerializeField]
     private GameObject bulletDecal;
 
+    
     private float speed = 50f;
     private float timeToDestroy = 3f;
 
@@ -17,6 +18,9 @@ public class BulletController : MonoBehaviour
     {
         Destroy(gameObject, timeToDestroy);
     }
+    private void Awake()
+    {
+    }
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -26,10 +30,12 @@ public class BulletController : MonoBehaviour
         }
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         ContactPoint contact = collision.GetContact(0);
-        GameObject.Instantiate(bulletDecal, contact.point + contact.normal * 0.0001f,Quaternion.LookRotation(contact.normal));
+        //contact.point + contact.normal * 0.0001f
+        GameObject.Instantiate(bulletDecal,target + contact.normal * 0.0001f, Quaternion.LookRotation(contact.normal));
         Destroy(gameObject);
     }
 }
