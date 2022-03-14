@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Collections;
 
 public class Gun : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class Gun : MonoBehaviour
     private float range = 100f;
     [SerializeField, Tooltip("Impact force of the gun")]
     private float impactForce = 30f;
+
+    [SerializeField, Tooltip("Max Ammo of the gun")]
+    private int maxAmmo = 15;
+    private int currentAmmo;
+    [SerializeField, Tooltip("Reload Time of the gun")]
+    private float reloadTime= 5f;
+    private bool isReloading;
 
     [Header("Third Person Camera")]
     [SerializeField, Tooltip("Third Person Camera")]
@@ -47,9 +55,25 @@ public class Gun : MonoBehaviour
         shootAction = playerInput.actions["Shoot"];
         recoilAnimation = Animator.StringToHash("Rifle Shoot Recoil");
     }
+    private void Start()
+    {
+        currentAmmo = maxAmmo;
+    }
+    private void OnEnable()
+    {
+        isReloading = false;
+        animator.SetBool("Reloading", false);
+    }
     // Update is called once per frame
     void Update()
     {
+        if (isReloading)
+            return;
+        if (currentAmmo <= 0)
+        {
+           StartCoroutine(Reload());
+            return;
+        }
         // Fire Gun while pressing mouse button using new input system and constraint that with rate of fire 
         if (shootAction.ReadValue<float>() > 0 && Time.time > nextFire)
         {
@@ -60,10 +84,25 @@ public class Gun : MonoBehaviour
 
 
     }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("Reloading...");
+        // animate reloading
+        //animator.SetBool("Reloading", true);
+        yield return new WaitForSeconds(reloadTime - 0.25f);
+       // animator.SetBool("Reloading", false);
+        yield return new WaitForSeconds(0.25f);
+        currentAmmo = maxAmmo;
+        isReloading = false;
+    }
     // Hitscan
     void Shoot()
     {
         muzzleFlash.Play();
+        currentAmmo--;
+
         RaycastHit hit;
         if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range))
         {
