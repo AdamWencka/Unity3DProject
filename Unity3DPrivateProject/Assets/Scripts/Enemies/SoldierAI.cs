@@ -16,9 +16,11 @@ public class SoldierAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        animator.Play("assault_combat_shoot");
-        soldier.GetComponent<NavigationAI>().enabled = false;
-        soldier.GetComponent<NavMeshAgent>().enabled = false;
+        if (other.tag == "Player"){
+            animator.Play("assault_combat_shoot");
+            soldier.GetComponent<NavigationAI>().enabled = false;
+            soldier.GetComponent<NavMeshAgent>().enabled = false;
+        }
     }
     private void OnTriggerExit(Collider other)
     {

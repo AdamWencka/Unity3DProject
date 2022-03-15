@@ -15,7 +15,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField, Tooltip("Max Ammo of the gun")]
     private int maxAmmo = 15;
-    private int currentAmmo;
+    public int currentAmmo { get; private set; }
     [SerializeField, Tooltip("Reload Time of the gun")]
     private float reloadTime= 5f;
     private bool isReloading;
@@ -43,8 +43,10 @@ public class Gun : MonoBehaviour
 
     private PlayerInput playerInput;
     private InputAction shootAction;
+    private InputAction reloadAction;
     private Animator animator;
     int recoilAnimation;
+    int reloadAnimation;
 
     public UnityEvent shake;
 
@@ -53,7 +55,9 @@ public class Gun : MonoBehaviour
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
         shootAction = playerInput.actions["Shoot"];
+        reloadAction = playerInput.actions["Reload"];
         recoilAnimation = Animator.StringToHash("Rifle Shoot Recoil");
+        reloadAnimation = Animator.StringToHash("Reload Rifle");
     }
     private void Start()
     {
@@ -69,6 +73,11 @@ public class Gun : MonoBehaviour
     {
         if (isReloading)
             return;
+        if(reloadAction.triggered && currentAmmo < maxAmmo)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
         if (currentAmmo <= 0)
         {
            StartCoroutine(Reload());
@@ -90,9 +99,9 @@ public class Gun : MonoBehaviour
         isReloading = true;
         Debug.Log("Reloading...");
         // animate reloading
-        //animator.SetBool("Reloading", true);
+        animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(reloadTime - 0.25f);
-       // animator.SetBool("Reloading", false);
+        animator.SetBool("Reloading", false);
         yield return new WaitForSeconds(0.25f);
         currentAmmo = maxAmmo;
         isReloading = false;
@@ -106,10 +115,10 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range))
         {
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
-            if(enemy != null)
+            EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
+            if(enemyHealth != null)
             {
-                enemy.TakeDamage(damage);
+                enemyHealth.TakeDamage(damage);
             }
 
             if(hit.rigidbody != null)
