@@ -25,8 +25,10 @@ public class Gun : MonoBehaviour
     private Camera tpsCam;
 
     [Header("Impact Effect")]
-    [SerializeField, Tooltip("Impact Effect")]
-    private GameObject impactEffect;
+    [SerializeField, Tooltip("Concrete Impact Effect")]
+    private GameObject concreteImpactEffect;
+    [SerializeField, Tooltip("Blood Impact Effect")]
+    private GameObject bloodImpactEffect;
 
     [Header("Muzzle Flash")]
     [SerializeField, Tooltip("Muzzle Flash")]
@@ -119,13 +121,16 @@ public class Gun : MonoBehaviour
             if(enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
+                Instantiate(bloodImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             }
 
             if(hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-            Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            if (hit.transform.tag != "Enemy")
+                Instantiate(concreteImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            
         }
         animator.CrossFade(recoilAnimation, animationPlayTransition);
     }

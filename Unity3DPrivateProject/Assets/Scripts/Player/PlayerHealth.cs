@@ -13,6 +13,11 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         currentHealth = startingHealth;
+        
+    }
+    private void Start()
+    {
+        GetComponent<PlayerRagdoll>().RagdollSetActive(false);
     }
     public void TakeDamage(float _damage)
     {
@@ -28,7 +33,8 @@ public class PlayerHealth : MonoBehaviour
             {
                 dead = true;
                 Debug.Log("You died");
-                // Play death animation? Play death sound
+                Die();
+                //  Play death sound
             }
         }
 
@@ -36,5 +42,10 @@ public class PlayerHealth : MonoBehaviour
     public void AddHealth(float _value)
     {
         currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+    }
+    private void Die()
+    {
+        //Activate Ragdoll Mode
+        GetComponent<PlayerRagdoll>().RagdollSetActive(true);
     }
 }
