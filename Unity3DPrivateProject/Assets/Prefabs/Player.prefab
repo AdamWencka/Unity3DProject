@@ -2010,10 +2010,14 @@ MonoBehaviour:
   maxAmmo: 30
   reloadTime: 1.75
   tpsCam: {fileID: 0}
-  impactEffect: {fileID: 4290041293945264206, guid: 559a369a9c6a35341b6519b5b82c041e, type: 3}
+  concreteImpactEffect: {fileID: 0}
+  bloodImpactEffect: {fileID: 0}
   muzzleFlash: {fileID: 4483163577504245549}
   fireRate: 10
   animationPlayTransition: 0.15
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   shake:
     m_PersistentCalls:
       m_Calls:

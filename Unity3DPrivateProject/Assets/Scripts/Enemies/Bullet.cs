@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+public class Bullet : PoolableObject
 {
     public float autoDestroyTime = 5f;
     public float moveSpeed = 2f;
-    public float damage = 10;
-    private Rigidbody Rigidbody;
+    public float damage = 10f;
+    public Rigidbody Rigidbody;
 
     private const string DISABLE_METHOD_NAME = "Disable";
 

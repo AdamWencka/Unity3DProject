@@ -48,7 +48,8 @@ public class Gun : MonoBehaviour
     private InputAction reloadAction;
     private Animator animator;
     int recoilAnimation;
-    int reloadAnimation;
+    public LayerMask ignoreLayerMask;
+    
 
     public UnityEvent shake;
 
@@ -59,7 +60,7 @@ public class Gun : MonoBehaviour
         shootAction = playerInput.actions["Shoot"];
         reloadAction = playerInput.actions["Reload"];
         recoilAnimation = Animator.StringToHash("Rifle Shoot Recoil");
-        reloadAnimation = Animator.StringToHash("Reload Rifle");
+
     }
     private void Start()
     {
@@ -115,8 +116,9 @@ public class Gun : MonoBehaviour
         currentAmmo--;
 
         RaycastHit hit;
-        if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range))
+        if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range,~ignoreLayerMask))
         {
+            Debug.Log(hit.transform.name);
             EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
             if(enemyHealth != null)
             {

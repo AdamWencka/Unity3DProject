@@ -47,15 +47,13 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public Transform GetTransform()
     {
-        if (collision.collider.tag == "Player")
-        {
-            Debug.Log("Hit player");
-            collision.collider.GetComponent<PlayerHealth>().TakeDamage(10f);
-        }
+        return transform;
     }
+
+
 }
