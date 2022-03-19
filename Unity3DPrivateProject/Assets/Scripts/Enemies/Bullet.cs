@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bullet : PoolableObject
 {
     public float autoDestroyTime = 5f;
-    public float moveSpeed = 2f;
+    public float moveSpeed = 10f;
     public float damage = 10f;
     public Rigidbody Rigidbody;
 

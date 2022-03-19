@@ -39,6 +39,10 @@ public class EnemyMovement : MonoBehaviour
         WaitForSeconds wait = new WaitForSeconds(updateSpeed);
         while (enabled)
         {
+            if (agent.enabled == false)
+            {
+                agent.enabled = true;
+            }
             agent.SetDestination(target.transform.position);
 
             yield return wait;

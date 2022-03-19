@@ -118,7 +118,7 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range,~ignoreLayerMask))
         {
-            Debug.Log(hit.transform.name);
+            
             EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
             if(enemyHealth != null)
             {

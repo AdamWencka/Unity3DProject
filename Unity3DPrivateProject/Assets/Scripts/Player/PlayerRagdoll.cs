@@ -10,6 +10,9 @@ public class PlayerRagdoll : MonoBehaviour
     private PlayerController playerController;
     private Gun gun;
 
+    [SerializeField]
+    private GameObject weapon;
+
     private Collider[] childrenCollider;
     private Rigidbody[] childrenRigidbody;
 
@@ -38,6 +41,7 @@ public class PlayerRagdoll : MonoBehaviour
             rigidbody.detectCollisions = activate;
         }
 
+        weapon.SetActive(!activate);
         //parent
         colliderParent.enabled = !activate;
         rigidbodyParent.isKinematic = activate;
