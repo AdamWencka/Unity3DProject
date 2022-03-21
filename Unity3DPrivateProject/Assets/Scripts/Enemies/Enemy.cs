@@ -73,6 +73,7 @@ public class Enemy : PoolableObject
         health -= amount;
         if(health <= 0f)
         {
+            
             gameObject.SetActive(false);
         }
     }
