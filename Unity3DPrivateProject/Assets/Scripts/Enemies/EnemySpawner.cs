@@ -10,7 +10,13 @@ public class EnemySpawner : MonoBehaviour
     public float spawnDelay = 1f;
     public List<Enemy> enemyPrefabs = new List<Enemy>();
     public SpawnMethod enemySpawnMethod = SpawnMethod.RoundRobin;
+    [SerializeField]
+    private int level = 0;
 
+    private int enemiesAlive = 0;
+    private int spawnedEnemies = 0;
+
+    public bool continousSpawning;
 
     private NavMeshTriangulation triangulation;
     private Dictionary<int, ObjectPool> enemyObjectPools = new Dictionary<int, ObjectPool>();
@@ -23,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
         triangulation = NavMesh.CalculateTriangulation();
@@ -32,9 +39,11 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        level++;
+        spawnedEnemies = 0;
+        enemiesAlive = 0;
         WaitForSeconds wait = new WaitForSeconds(spawnDelay);
 
-        int spawnedEnemies = 0;
 
         while(spawnedEnemies < numberOfEnemiesToSpawn)
         {
@@ -50,6 +59,10 @@ public class EnemySpawner : MonoBehaviour
             spawnedEnemies++;
             yield return wait;
         }
+        if (continousSpawning)
+        {
+            StartCoroutine(SpawnEnemies());
+        }
     }
 
     private void SpawnRoundRobinEnemy(int spawnedEnemies)
@@ -64,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
         DoSpawnEnemy(Random.Range(0, enemyPrefabs.Count));
     }
 
-    private void DoSpawnEnemy(int SpawnIndex)
+    public void DoSpawnEnemy(int SpawnIndex)
     {
         PoolableObject poolableObject = enemyObjectPools[SpawnIndex].GetObject();
 
@@ -83,6 +96,8 @@ public class EnemySpawner : MonoBehaviour
                 enemy.movement.target = player;
                 enemy.agent.enabled = true;
                 enemy.movement.StartChasing();
+                enemy.GetComponent<EnemyHealth>().OnDie += HandleEnemyDeath;
+                enemiesAlive++;
             }
             else
             {
@@ -95,6 +110,16 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogError($"Unable to fetxh enemy of type {SpawnIndex} from object pool. Out of objects?");
         }
     }
+
+    private void HandleEnemyDeath(Enemy enemy)
+    {
+        enemiesAlive--;
+        if(enemiesAlive == 0 && spawnedEnemies == numberOfEnemiesToSpawn)
+        {
+            StartCoroutine(SpawnEnemies());
+        }
+    }
+
     public enum SpawnMethod
     {
         RoundRobin,

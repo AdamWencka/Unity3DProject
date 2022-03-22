@@ -12,7 +12,10 @@ public class Enemy : PoolableObject
     private Coroutine LookCoroutine;
 
 
-   
+    private void Awake()
+    {
+        health = GetComponent<EnemyHealth>().health;
+    }
     public void OnAttack()
     {
 
@@ -48,8 +51,10 @@ public class Enemy : PoolableObject
         base.OnDisable();
 
         agent.enabled = false;
+        
     }
 
+    // For Future this is how I can setup diffrent parameters like health so that i can reuse or upscale Enemies for now I just reset value of health in EnemyHealth
     public virtual void SetupAgentFromConfiguration()
     {
         agent.acceleration = enemyScriptableObject.acceleration;
