@@ -19,6 +19,10 @@ public class PlayerHealth : MonoBehaviour
     {
         GetComponent<PlayerRagdoll>().RagdollSetActive(false);
     }
+    public float GetMaxHealth()
+    {
+        return startingHealth;
+    }
     public void TakeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
