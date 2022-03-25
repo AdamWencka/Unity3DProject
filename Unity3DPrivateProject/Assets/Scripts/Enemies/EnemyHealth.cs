@@ -12,6 +12,10 @@ public class EnemyHealth : MonoBehaviour
     private GameObject healthBarUI;
     [SerializeField]
     private Slider healthSlider;
+    [SerializeField]
+    private AudioClip hurtSound;
+    [SerializeField]
+    private AudioClip deathSound;
 
     private void Start()
     {
@@ -39,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
     }
     public void TakeDamage(float amount)
     {
+        AudioSource.PlayClipAtPoint(hurtSound, gameObject.transform.position);
         health -= amount;
         if (health <= 0f)
         {
@@ -59,6 +64,7 @@ public class EnemyHealth : MonoBehaviour
     {
         OnDie?.Invoke(GetComponent<Enemy>());
         ScoreCount.instance.IncrementScore();
+        AudioSource.PlayClipAtPoint(deathSound, gameObject.transform.position);
         gameObject.SetActive(false);
         
     }

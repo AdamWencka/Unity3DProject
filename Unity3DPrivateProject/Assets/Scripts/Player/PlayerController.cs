@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private float aimDistance = 1f;
 
 
+    [SerializeField]
+    private AudioClip jumpSound;
 
 
     private CharacterController controller;
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 currentAnimationBlendVector;
     Vector2 animationVelocity;
+
 
     private void Awake()
     {
@@ -99,6 +102,15 @@ public class PlayerController : MonoBehaviour
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
+
+        if (groundedPlayer == true && controller.velocity.magnitude > 2f && GetComponent<AudioSource>().isPlaying == false)
+        {
+            GetComponent<AudioSource>().volume = Random.Range(0.8f, 1f);
+            GetComponent<AudioSource>().volume = Random.Range(0.8f, 1.1f);
+            GetComponent<AudioSource>().Play();
+        }
+            
+        
         // Blend Strafe Animation
         animator.SetFloat(moveXAnimationParameterId, currentAnimationBlendVector.x);
         animator.SetFloat(moveZAnimationParameterId, currentAnimationBlendVector.y);
@@ -106,6 +118,7 @@ public class PlayerController : MonoBehaviour
         if (jumpAction.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            AudioSource.PlayClipAtPoint(jumpSound, gameObject.transform.position);
             animator.CrossFade(jumpAnimation, animationPlayTransition);
         }
 

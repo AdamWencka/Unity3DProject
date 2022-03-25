@@ -25,6 +25,8 @@ public class RangedAttack : MonoBehaviour
     [Header("Muzzle Flash")]
     [SerializeField, Tooltip("Muzzle Flash")]
     private ParticleSystem muzzleFlash;
+    [SerializeField]
+    private AudioClip shootSound;
 
     Vector3 direction;
     private void Awake()
@@ -37,22 +39,17 @@ public class RangedAttack : MonoBehaviour
         Vector3 targetPos = target.position;
 
         direction = targetPos - transform.position;
-         
-   
         RaycastHit rayInfo;
-
 
         if (Physics.Raycast(transform.position + Vector3.up, direction, out rayInfo, range))
         {
-            if(rayInfo.collider.tag == "Player")
+            if (rayInfo.collider.tag == "Player")
             {
                 detected = true;
                 agent.enabled = false;
 
-                Debug.Log("Sees player");
-                
                 ShootPlayer();
-               
+
             }
             else
             {
@@ -61,6 +58,7 @@ public class RangedAttack : MonoBehaviour
             }
         }
     }
+
     private void FixedUpdate()
     {
         if (detected)
@@ -68,6 +66,7 @@ public class RangedAttack : MonoBehaviour
             enemy.target = target.transform;
             enemy.OnAttack();
         }
+
     }
 
     void ShootPlayer()
@@ -75,6 +74,7 @@ public class RangedAttack : MonoBehaviour
         if (Time.time > nextAttack)
         {
             muzzleFlash.Play();
+            AudioSource.PlayClipAtPoint(shootSound, bulletSpawnOffset.position);
             PoolableObject poolableObject = bulletPool.GetObject();
             
             nextAttack = Time.time + 1f / attackRate;

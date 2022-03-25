@@ -43,6 +43,11 @@ public class Gun : MonoBehaviour
     [SerializeField, Tooltip("Value used animation transition")]
     private float animationPlayTransition = 0.15f;
 
+    [SerializeField]
+    private AudioClip reloadSound;
+    [SerializeField]
+    private AudioClip shootSound;
+
     private PlayerInput playerInput;
     private InputAction shootAction;
     private InputAction reloadAction;
@@ -102,6 +107,7 @@ public class Gun : MonoBehaviour
         isReloading = true;
         Debug.Log("Reloading...");
         // animate reloading
+        AudioSource.PlayClipAtPoint(reloadSound, muzzleFlash.gameObject.transform.position);
         animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(reloadTime - 0.25f);
         animator.SetBool("Reloading", false);
@@ -134,6 +140,7 @@ public class Gun : MonoBehaviour
                 Instantiate(concreteImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             
         }
+        AudioSource.PlayClipAtPoint(shootSound, muzzleFlash.gameObject.transform.position);
         animator.CrossFade(recoilAnimation, animationPlayTransition);
     }
 

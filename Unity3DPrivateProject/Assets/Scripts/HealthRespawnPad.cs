@@ -10,24 +10,27 @@ public class HealthRespawnPad : MonoBehaviour
     public float timeToRespawn;
 
 
-
-    
-    void Update()
+    private void Start()
     {
-        if (!healthPack.activeSelf)
-            StartCoroutine(RespawnHealthPack());
+        StartCoroutine(RespawnHealthPack());
     }
+
+
 
 
     IEnumerator RespawnHealthPack()
     {
-        
-
-        if (!healthPack.activeSelf)
+        while (true)
         {
-            yield return new WaitForSeconds(timeToRespawn);
-            healthPack.SetActive(true);
+            if (healthPack.activeInHierarchy)
+                yield return null;
+            if (!healthPack.activeInHierarchy)
+            {
+                yield return new WaitForSeconds(timeToRespawn);
+                healthPack.SetActive(true);
+            }
+
         }
-        yield return null;
+        
     }
 }

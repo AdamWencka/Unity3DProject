@@ -140,7 +140,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -208,8 +208,8 @@ MonoBehaviour:
   rotate: 1
   rotationSpeed: 20
   healthAmount: 30
-  collectSound: {fileID: 0}
-  collectEffect: {fileID: 0}
+  collectSound: {fileID: 8300000, guid: b8dc0e57a3c12a7489dcf489a45a8360, type: 3}
+  collectEffect: {fileID: 2235272950083392079, guid: 832935a3f0c070246959f6ac45640c70, type: 3}
 --- !u!1 &2669642808926429493
 GameObject:
   m_ObjectHideFlags: 0

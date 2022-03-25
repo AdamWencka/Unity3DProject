@@ -9,6 +9,8 @@ public class MeleeAttack : MonoBehaviour
     public float attackRate = 1f;
     private float nextAttack = 0.0f;
    public Enemy enemy;
+    [SerializeField]
+    private AudioClip attackSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,6 +37,7 @@ public class MeleeAttack : MonoBehaviour
             {
                 nextAttack = Time.time + 1f / attackRate;
                 animator.SetTrigger("Attack");
+                AudioSource.PlayClipAtPoint(attackSound, other.transform.position);
                 other.GetComponent<PlayerHealth>().TakeDamage(damage);
             }
 

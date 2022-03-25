@@ -6,6 +6,10 @@ public class PlayerHealth : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float startingHealth;
+    [SerializeField]
+    private AudioClip hurtSound;
+    [SerializeField]
+    private AudioClip deathSound;
     public float currentHealth { get; private set; }
 
     private bool dead;
@@ -29,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            //Play hurt sound
+            AudioSource.PlayClipAtPoint(hurtSound, gameObject.transform.position);
         }
         else
         {
@@ -38,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
                 dead = true;
                 Debug.Log("You died");
                 Die();
-                //  Play death sound
+                AudioSource.PlayClipAtPoint(deathSound, gameObject.transform.position);
             }
         }
 

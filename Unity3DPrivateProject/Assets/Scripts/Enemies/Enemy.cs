@@ -36,7 +36,7 @@ public class Enemy : PoolableObject
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
 
-            time += Time.deltaTime * 2;
+            time += Time.deltaTime * 4;
             yield return null;
         }
 

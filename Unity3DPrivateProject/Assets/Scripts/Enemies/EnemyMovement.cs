@@ -44,6 +44,15 @@ public class EnemyMovement : MonoBehaviour
                 agent.enabled = true;
             }
             agent.SetDestination(target.transform.position);
+  
+            if(agent.enabled == true && GetComponent<AudioSource>().isPlaying == false)
+            {  
+                GetComponent<AudioSource>().volume = Random.Range(0.8f,1f);
+                GetComponent<AudioSource>().volume = Random.Range(0.8f, 1.1f);
+                GetComponent<AudioSource>().Play();
+            }
+            
+               
 
             yield return wait;
         }
