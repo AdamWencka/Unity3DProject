@@ -106,6 +106,7 @@ MonoBehaviour:
   healthSlider: {fileID: 993650809107986001}
   hurtSound: {fileID: 8300000, guid: a21a4c8d143a6ab41b5ef08fdbd8455b, type: 3}
   deathSound: {fileID: 8300000, guid: 86712422be20a734987f0e0d227df0c2, type: 3}
+  deathEffect: {fileID: 2271990411565590761, guid: c62dc82b85ebced4b85f6ee00600e6ba, type: 3}
 --- !u!114 &3375501847851168324
 MonoBehaviour:
   m_ObjectHideFlags: 0

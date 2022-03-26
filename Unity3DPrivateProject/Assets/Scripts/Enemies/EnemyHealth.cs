@@ -16,6 +16,9 @@ public class EnemyHealth : MonoBehaviour
     private AudioClip hurtSound;
     [SerializeField]
     private AudioClip deathSound;
+    [SerializeField]
+    private GameObject deathEffect;
+
 
     private void Start()
     {
@@ -64,6 +67,7 @@ public class EnemyHealth : MonoBehaviour
     {
         OnDie?.Invoke(GetComponent<Enemy>());
         ScoreCount.instance.IncrementScore();
+        Instantiate(deathEffect, transform.position + transform.up, Quaternion.identity);
         AudioSource.PlayClipAtPoint(deathSound, gameObject.transform.position);
         gameObject.SetActive(false);
         

@@ -33,6 +33,8 @@ public class Gun : MonoBehaviour
     [Header("Muzzle Flash")]
     [SerializeField, Tooltip("Muzzle Flash")]
     private ParticleSystem muzzleFlash;
+    [SerializeField]
+    private TrailRenderer bulletTrail;
 
     [Header("Fire Rate")]
     [SerializeField, Tooltip("Fire rate of the rifle")]
@@ -124,7 +126,8 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(tpsCam.transform.position, tpsCam.transform.forward, out hit, range,~ignoreLayerMask))
         {
-            
+            TrailRenderer trail = Instantiate(bulletTrail, muzzleFlash.transform.position, Quaternion.identity);
+            StartCoroutine(SpawnTrail(trail, hit));
             EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
             if(enemyHealth != null)
             {
@@ -144,7 +147,20 @@ public class Gun : MonoBehaviour
         animator.CrossFade(recoilAnimation, animationPlayTransition);
     }
 
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time += Time.deltaTime / trail.time;
+            yield return null;
+        }
+        trail.transform.position = hit.point;
 
+        Destroy(trail.gameObject, trail.time);
+    }
 
 
     // For a bullet spawning
