@@ -43,6 +43,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 agent.enabled = true;
             }
+            if (agent.enabled == true) //if doesnt work remove this line
             agent.SetDestination(target.transform.position);
   
             if(agent.enabled == true && GetComponent<AudioSource>().isPlaying == false)

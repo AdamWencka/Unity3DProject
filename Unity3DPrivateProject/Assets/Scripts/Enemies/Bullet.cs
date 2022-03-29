@@ -12,6 +12,7 @@ public class Bullet : PoolableObject
     [Header("Impact Effect")]
     [SerializeField, Tooltip("Enemy Bullet Impact Effect")]
     private GameObject enemyBulletImpactEffect;
+   
 
     private const string DISABLE_METHOD_NAME = "Disable";
 
