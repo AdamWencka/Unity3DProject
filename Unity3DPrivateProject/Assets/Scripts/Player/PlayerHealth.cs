@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     private AudioClip hurtSound;
     [SerializeField]
     private AudioClip deathSound;
+
+    private PauseMenu pm;
     public float currentHealth { get; private set; }
 
     private bool dead;
@@ -22,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         GetComponent<PlayerRagdoll>().RagdollSetActive(false);
+        pm = GameObject.FindGameObjectWithTag("PM").GetComponent<PauseMenu>();
     }
     public float GetMaxHealth()
     {
@@ -55,5 +58,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //Activate Ragdoll Mode
         GetComponent<PlayerRagdoll>().RagdollSetActive(true);
+
+        pm.GameOver();
     }
 }

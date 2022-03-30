@@ -20,29 +20,40 @@ public class SwitchVCam : MonoBehaviour
     {
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         aimAction = playerInput.actions["Aim"];
+
     }
     private void OnEnable()
     {
         aimAction.performed += _ => StartAim();
         aimAction.canceled += _ => CancelAim();
     }
+    
     private void OnDisable()
     {
         aimAction.performed -= _ => StartAim();
         aimAction.canceled -= _ => CancelAim();
     }
 
+
     private void StartAim()
     {
         virtualCamera.Priority += priorityBoostAmount;
-        aimCanvas.enabled = true;
-        thirdPersonCanvas.enabled = false;
+        if (thirdPersonCanvas != null && aimCanvas != null)
+        {
+            aimCanvas.enabled = true;
+            thirdPersonCanvas.enabled = false;
+        }
+  
     }
 
     private void CancelAim()
     {
         virtualCamera.Priority -= priorityBoostAmount;
-        aimCanvas.enabled = false;
-        thirdPersonCanvas.enabled = true;
+        if (thirdPersonCanvas != null && aimCanvas != null)
+        {
+            aimCanvas.enabled = false;
+            thirdPersonCanvas.enabled = true;
+        }
+
     }
 }

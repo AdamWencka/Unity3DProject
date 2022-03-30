@@ -79,7 +79,20 @@ public class PlayerController : MonoBehaviour
         moveZAnimationParameterId = Animator.StringToHash("MoveZ");
         animator.SetFloat(moveXAnimationParameterId, 1f);
     }
-
+    private void OnEnable()
+    {
+        if(PauseMenu.GameIsPaused == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+    private void OnDisable()
+    {
+        if (PauseMenu.GameIsPaused == true)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
     private void Aim()
     {
         aimTarget.position = cameraTransform.position + cameraTransform.forward * aimDistance;
