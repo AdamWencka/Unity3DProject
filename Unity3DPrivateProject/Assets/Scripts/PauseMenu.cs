@@ -21,8 +21,7 @@ public class PauseMenu : MonoBehaviour
     private GameObject aimCanvas;
     [SerializeField]
     private GameObject thirdPersonCanvas;
-    [SerializeField]
-    private GameObject UICanvas;
+
     [SerializeField]
     private PlayerController playerController;
     [SerializeField]
@@ -58,7 +57,6 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         aimCanvas.SetActive(true);
         thirdPersonCanvas.SetActive(true);
-        UICanvas.SetActive(true);
         playerController.enabled = true;
         gun.enabled = true;
     }
@@ -70,7 +68,6 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
         aimCanvas.SetActive(false);
         thirdPersonCanvas.SetActive(false);
-        UICanvas.SetActive(false);
         playerController.enabled = false;
         gun.enabled = false;
         Cursor.lockState = CursorLockMode.None;
