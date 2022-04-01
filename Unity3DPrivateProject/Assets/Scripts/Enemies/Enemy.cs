@@ -12,6 +12,7 @@ public class Enemy : PoolableObject
     private Coroutine LookCoroutine;
 
 
+
     private void Awake()
     {
         health = GetComponent<EnemyHealth>().health;
@@ -29,14 +30,18 @@ public class Enemy : PoolableObject
 
     private IEnumerator LookAt(Transform Target)
     {
+        
+        
         Quaternion lookRotation = Quaternion.LookRotation(Target.position - transform.position);
-        float time = 0;
 
+        float time = 0;
+       
+        
         while (time < 1)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
-
-            time += Time.deltaTime * 4;
+       
+            time += Time.deltaTime * 2;
             yield return null;
         }
 

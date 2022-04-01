@@ -37,14 +37,13 @@ public class EnemyMovement : MonoBehaviour
     private IEnumerator FollowTarget()
     {
         WaitForSeconds wait = new WaitForSeconds(updateSpeed);
-        while (enabled)
+        while (true)
         {
-            if (agent.enabled == false)
+            if (agent.enabled)
             {
-                agent.enabled = true;
+                agent.SetDestination(target.transform.position);
             }
-            if (agent.enabled == true) //if doesnt work remove this line
-            agent.SetDestination(target.transform.position);
+   
   
             if(agent.enabled == true && GetComponent<AudioSource>().isPlaying == false)
             {  

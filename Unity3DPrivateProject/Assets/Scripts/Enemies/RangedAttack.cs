@@ -16,7 +16,7 @@ public class RangedAttack : MonoBehaviour
 
     private Bullet bullet;
     public Enemy enemy;
-
+    public EnemyMovement enemyMovement;
     public float range;
     public Transform target;
 
@@ -27,12 +27,17 @@ public class RangedAttack : MonoBehaviour
     private ParticleSystem muzzleFlash;
     [SerializeField]
     private AudioClip shootSound;
+    [SerializeField, Tooltip("Value used animation transition")]
+    private float animationPlayTransition = 0.15f;
+    int rifleShootAnimation;
+    
 
     Vector3 direction;
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         bulletPool = ObjectPool.CreateInstance(bulletPrefab, Mathf.CeilToInt((1 / attackRate) * bulletPrefab.autoDestroyTime));
+        rifleShootAnimation = Animator.StringToHash("assault_combat_shoot");
     }
     private void Update()
     {
@@ -45,13 +50,16 @@ public class RangedAttack : MonoBehaviour
         {
             if (rayInfo.collider.tag == "Player")
             {
-                detected = true;
-                agent.enabled = false;
-
-                ShootPlayer();
-
+                    detected = true;
+                    agent.enabled = false;
+                    ShootPlayer();
             }
             else
+            {
+                agent.enabled = true;
+                detected = false;
+            }
+            if(Vector3.Distance(transform.position, rayInfo.collider.transform.position) > range)
             {
                 agent.enabled = true;
                 detected = false;
@@ -61,10 +69,12 @@ public class RangedAttack : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (detected)
         {
             enemy.target = target.transform;
             enemy.OnAttack();
+
         }
 
     }
@@ -78,7 +88,8 @@ public class RangedAttack : MonoBehaviour
             PoolableObject poolableObject = bulletPool.GetObject();
             
             nextAttack = Time.time + 1f / attackRate;
-            animator.SetTrigger("Shoot");
+            animator.CrossFade(rifleShootAnimation, animationPlayTransition);
+            //animator.SetTrigger("Shoot");
             bullet = poolableObject.GetComponent<Bullet>();
             bullet.damage = damage;
             bullet.transform.position = bulletSpawnOffset.position;
