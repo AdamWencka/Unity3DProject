@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class HealthPickup : MonoBehaviour
 {
-
-    public bool rotate; // do you want it to rotate?
-
-    public float rotationSpeed;
+    [SerializeField]
+    private bool rotate; // do you want it to rotate?
+    [SerializeField]
+    private float rotationSpeed;
 
     [SerializeField]
     private float healthAmount;
 
-
-    public AudioClip collectSound;
-
-    public GameObject collectEffect;
+    [SerializeField]
+    private AudioClip collectSound;
+    [SerializeField]
+    private GameObject collectEffect;
 
     private void Update()
     {

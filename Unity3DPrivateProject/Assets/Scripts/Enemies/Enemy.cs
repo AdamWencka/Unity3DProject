@@ -4,11 +4,15 @@ using UnityEngine.AI;
 
 public class Enemy : PoolableObject
 {
+    
     public Transform target;
+    
     public EnemyMovement movement;
+    
     public NavMeshAgent agent;
     public EnemyScriptableObject enemyScriptableObject;
-    public float health = 50f;
+    [SerializeField]
+    private float health = 50f;
     private Coroutine LookCoroutine;
 
 

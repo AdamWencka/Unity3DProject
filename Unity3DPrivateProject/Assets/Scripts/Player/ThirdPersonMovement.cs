@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    [Header("Character Controller and camera")]
+    [SerializeField]
+    private CharacterController controller;
+    [SerializeField]
+    private Transform cam;
 
-    public Transform cam;
-
-    public float speed = 6f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3;
+    [Header("Basic Parameters")]
+    [SerializeField]
+    private float speed = 6f;
+    [SerializeField]
+    private float gravity = -9.81f;
+    [SerializeField]
+    private float jumpHeight = 3;
     Vector3 velocity;
     bool isGrounded;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
-    public float turnSmoothTime = 0.1f;
+    [Header("Parameters for ground check")]
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private float groundDistance = 0.4f;
+    [SerializeField]
+    private LayerMask groundMask;
+    [Header("Rotation Speed")]
+    [SerializeField]
+    private float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
     private void Update()

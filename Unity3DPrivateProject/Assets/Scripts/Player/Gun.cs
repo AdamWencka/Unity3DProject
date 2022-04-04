@@ -44,7 +44,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField, Tooltip("Value used animation transition")]
     private float animationPlayTransition = 0.15f;
-
+    [Header("SFX")]
     [SerializeField]
     private AudioClip reloadSound;
     [SerializeField]
@@ -55,7 +55,8 @@ public class Gun : MonoBehaviour
     private InputAction reloadAction;
     private Animator animator;
     int recoilAnimation;
-    public LayerMask ignoreLayerMask;
+    [SerializeField]
+    private LayerMask ignoreLayerMask;
     
 
     public UnityEvent shake;

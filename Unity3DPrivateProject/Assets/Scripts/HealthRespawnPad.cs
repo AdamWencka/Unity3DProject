@@ -6,8 +6,8 @@ public class HealthRespawnPad : MonoBehaviour
 {
     [SerializeField]
     private GameObject healthPack;
-
-    public float timeToRespawn;
+    [SerializeField]
+    private float timeToRespawn;
 
 
     private void Start()

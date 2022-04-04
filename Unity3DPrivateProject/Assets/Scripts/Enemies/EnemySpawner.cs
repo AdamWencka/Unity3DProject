@@ -5,18 +5,23 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Transform player;
-    public int numberOfEnemiesToSpawn = 5;
-    public float spawnDelay = 1f;
-    public List<Enemy> enemyPrefabs = new List<Enemy>();
-    public SpawnMethod enemySpawnMethod = SpawnMethod.RoundRobin;
+    [SerializeField]
+    private Transform player;
+    [SerializeField]
+    private int numberOfEnemiesToSpawn = 5;
+    [SerializeField]
+    private float spawnDelay = 1f;
+    [SerializeField]
+    private List<Enemy> enemyPrefabs = new List<Enemy>();
+    [SerializeField]
+    private SpawnMethod enemySpawnMethod = SpawnMethod.RoundRobin;
     [SerializeField]
     private int level = 0;
 
     private int enemiesAlive = 0;
     private int spawnedEnemies = 0;
-
-    public bool continousSpawning;
+    [SerializeField]
+    private bool continousSpawning;
 
     private NavMeshTriangulation triangulation;
     private Dictionary<int, ObjectPool> enemyObjectPools = new Dictionary<int, ObjectPool>();

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField]
+    
     public float health = 50f;
     private float maxHealth =50f;
     public delegate void DeathEvent(Enemy enemy);

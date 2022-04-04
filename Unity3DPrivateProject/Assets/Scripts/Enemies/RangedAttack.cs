@@ -5,11 +5,14 @@ using UnityEngine.AI;
 
 public class RangedAttack : MonoBehaviour
 {
-    public Animator animator;
+    [SerializeField]
+    private Animator animator;
     public NavMeshAgent agent;
-    public float damage;
+    [SerializeField]
+    private float damage;
     public Bullet bulletPrefab;
-    public float attackRate = 1f;
+    [SerializeField]
+    private float attackRate = 1f;
     private float nextAttack = 0.0f;
     public Transform bulletSpawnOffset; // Add empty gameobject in front of barrel 
     private ObjectPool bulletPool;
@@ -17,7 +20,8 @@ public class RangedAttack : MonoBehaviour
     private Bullet bullet;
     public Enemy enemy;
     public EnemyMovement enemyMovement;
-    public float range;
+    [SerializeField]
+    private float range;
     public Transform target;
 
     bool detected = false;
@@ -89,7 +93,6 @@ public class RangedAttack : MonoBehaviour
             
             nextAttack = Time.time + 1f / attackRate;
             animator.CrossFade(rifleShootAnimation, animationPlayTransition);
-            //animator.SetTrigger("Shoot");
             bullet = poolableObject.GetComponent<Bullet>();
             bullet.damage = damage;
             bullet.transform.position = bulletSpawnOffset.position;
