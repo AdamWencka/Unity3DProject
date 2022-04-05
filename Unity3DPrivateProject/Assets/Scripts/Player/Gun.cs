@@ -108,7 +108,7 @@ public class Gun : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log("Reloading...");
+        
         // animate reloading
         AudioSource.PlayClipAtPoint(reloadSound, muzzleFlash.gameObject.transform.position);
         animator.SetBool("Reloading", true);
